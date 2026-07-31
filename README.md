@@ -1,1 +1,1062 @@
-# Schleintvein141.github.io
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VÓRTICE® — Sneakers, Áudio & Streetwear</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%237C3AED'/%3E%3Ctext x='50' y='74' font-size='64' text-anchor='middle' font-family='Arial' font-weight='bold' fill='%23050508'%3EV%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@400;600;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============ BASE ============ */
+:root{
+  --roxo:#8B5CF6; --roxo-2:#7C3AED; --roxo-neon:#B79CFF;
+  --roxo-glow:rgba(139,92,246,.45);
+  --preto:#050508; --preto-2:#0B0B13; --preto-3:#12121D;
+  --branco:#F4F2FF; --cinza:#8E93A6;
+  --borda:rgba(139,92,246,.22);
+  --disp:'Unbounded',sans-serif; --body:'Space Grotesk',sans-serif;
+  --ease:cubic-bezier(.22,1,.36,1);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--preto);color:var(--branco);
+  font-family:var(--body);font-size:16px;line-height:1.6;
+  overflow-x:hidden;
+}
+/* fundo em camadas: brilhos roxos fixos */
+body::before{
+  content:"";position:fixed;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(900px 600px at -8% -10%, rgba(124,58,237,.22), transparent 60%),
+    radial-gradient(800px 700px at 108% 110%, rgba(139,92,246,.14), transparent 60%),
+    radial-gradient(500px 400px at 85% 8%, rgba(183,156,255,.07), transparent 60%);
+}
+/* granulado de filme por cima de tudo */
+body::after{
+  content:"";position:fixed;inset:0;z-index:9995;pointer-events:none;opacity:.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+::selection{background:var(--roxo);color:#0a0a10}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-track{background:var(--preto)}
+::-webkit-scrollbar-thumb{background:#282838;border:2px solid var(--preto)}
+::-webkit-scrollbar-thumb:hover{background:var(--roxo)}
+img{display:block;max-width:100%}
+a{color:inherit}
+button{font-family:inherit}
+:focus-visible{outline:2px solid var(--roxo);outline-offset:3px}
+.wrap{max-width:1240px;margin:0 auto;padding:0 24px;position:relative;z-index:2}
+section{scroll-margin-top:90px}
+
+/* ============ PRELOADER ============ */
+#preloader{
+  position:fixed;inset:0;background:var(--preto);z-index:10000;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:26px;
+  transition:transform .8s cubic-bezier(.76,0,.24,1);
+}
+#preloader.done{transform:translateY(-101%)}
+.pre-logo{font-family:var(--disp);font-weight:900;font-size:clamp(2rem,6vw,3.4rem);letter-spacing:.02em;animation:preBlur 1s .1s var(--ease) both}
+.pre-logo span{color:var(--roxo)}
+.pre-bar{width:min(280px,60vw);height:2px;background:rgba(255,255,255,.12);overflow:hidden}
+.pre-bar i{display:block;height:100%;width:0;background:var(--roxo);animation:load 1.3s ease forwards}
+@keyframes load{to{width:100%}}
+@keyframes preBlur{from{opacity:0;filter:blur(18px);transform:translateY(22px)}to{opacity:1;filter:blur(0);transform:none}}
+
+/* ============ BARRA DE PROGRESSO / RASTRO ============ */
+#progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--roxo);box-shadow:0 0 14px var(--roxo-glow);z-index:9999}
+.trail{
+  position:fixed;width:10px;height:10px;border-radius:50%;background:var(--roxo);
+  filter:blur(6px);pointer-events:none;z-index:9994;transform:translate(-50%,-50%);
+  animation:trailFade .6s ease-out forwards;
+}
+@keyframes trailFade{to{opacity:0;transform:translate(-50%,-50%) scale(.2)}}
+
+/* ============ TICKER TOPO ============ */
+.ticker{background:var(--roxo);color:#0a0a10;overflow:hidden;position:relative;z-index:2}
+.ticker-track{display:flex;width:max-content;animation:mq 24s linear infinite}
+.ticker span{font-family:var(--disp);font-weight:600;font-size:.68rem;letter-spacing:.18em;padding:.55rem 1.4rem;white-space:nowrap}
+@keyframes mq{to{transform:translateX(-50%)}}
+
+/* ============ NAV ============ */
+#nav{
+  position:sticky;top:0;z-index:900;
+  background:rgba(5,5,8,.72);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--borda);transition:.4s;
+}
+#nav.scrolled{background:rgba(5,5,8,.92)}
+.nav-in{max-width:1240px;margin:0 auto;padding:18px 24px;display:flex;align-items:center;gap:34px;transition:.4s}
+#nav.scrolled .nav-in{padding:12px 24px}
+.logo{font-family:var(--disp);font-weight:900;font-size:1.25rem;text-decoration:none;letter-spacing:.02em}
+.logo span{color:var(--roxo)}
+.links{display:flex;gap:28px;margin-left:12px}
+.links a{
+  text-decoration:none;color:var(--cinza);font-weight:500;font-size:.92rem;position:relative;transition:.3s;
+}
+.links a::after{content:"";position:absolute;left:0;bottom:-5px;width:0;height:2px;background:var(--roxo);transition:width .35s var(--ease)}
+.links a:hover{color:var(--branco)}
+.links a:hover::after{width:100%}
+.nav-acts{margin-left:auto;display:flex;align-items:center;gap:12px}
+.icon-btn{
+  position:relative;width:42px;height:42px;display:grid;place-items:center;cursor:pointer;
+  background:transparent;border:1px solid rgba(255,255,255,.16);color:var(--branco);transition:.3s;
+}
+.icon-btn:hover{border-color:var(--roxo);color:var(--roxo-neon);transform:translateY(-2px)}
+.icon-btn svg{width:18px;height:18px}
+.badge{
+  position:absolute;top:-7px;right:-7px;min-width:19px;height:19px;padding:0 4px;
+  background:var(--roxo);color:#0a0a10;font-family:var(--disp);font-size:.6rem;font-weight:800;
+  display:grid;place-items:center;border-radius:50%;
+}
+.badge.pop{animation:pop .4s var(--ease)}
+@keyframes pop{50%{transform:scale(1.5)}}
+.hamburger{display:none;width:42px;height:42px;background:none;border:1px solid rgba(255,255,255,.16);cursor:pointer;flex-direction:column;align-items:center;justify-content:center;gap:5px}
+.hamburger span{width:18px;height:2px;background:var(--branco);transition:.35s var(--ease)}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;flex-direction:column;border-top:1px solid var(--borda);max-height:0;overflow:hidden;transition:max-height .5s var(--ease)}
+.mobile-menu.open{max-height:320px}
+.mobile-menu a{padding:16px 24px;text-decoration:none;color:var(--branco);font-family:var(--disp);font-size:.85rem;border-bottom:1px solid rgba(255,255,255,.05)}
+.mobile-menu a:hover{color:var(--roxo-neon);padding-left:34px;transition:.3s}
+#searchBar{max-height:0;overflow:hidden;transition:max-height .45s var(--ease)}
+#searchBar.open{max-height:80px}
+#searchBar input{
+  width:100%;margin:0 0 18px;background:var(--preto-3);border:1px solid var(--borda);
+  color:var(--branco);padding:14px 18px;font-family:var(--body);font-size:.95rem;
+}
+#searchBar input:focus{outline:none;border-color:var(--roxo);box-shadow:0 0 0 3px rgba(139,92,246,.18)}
+
+/* ============ BOTÕES ============ */
+.btn{
+  font-family:var(--disp);font-size:.75rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  padding:1.05rem 1.7rem;display:inline-flex;align-items:center;gap:.6rem;cursor:pointer;
+  text-decoration:none;position:relative;overflow:hidden;transition:.35s var(--ease);border:0;
+}
+.btn-solid{
+  background:var(--roxo);color:#0a0a10;
+  clip-path:polygon(0 0,100% 0,100% calc(100% - 12px),calc(100% - 12px) 100%,0 100%);
+}
+.btn-solid::after{
+  content:"";position:absolute;top:0;left:-80%;width:50%;height:100%;
+  background:linear-gradient(105deg,transparent,rgba(255,255,255,.6),transparent);
+  transform:skewX(-20deg);transition:left .55s ease;
+}
+.btn-solid:hover{background:var(--roxo-neon);transform:translateY(-3px)}
+.btn-solid:hover::after{left:140%}
+.btn-ghost{background:transparent;border:1px solid rgba(255,255,255,.28);color:var(--branco)}
+.btn-ghost:hover{border-color:var(--roxo);color:var(--roxo-neon);background:rgba(139,92,246,.08);transform:translateY(-3px)}
+.btn-black{background:#0a0a10;color:#fff}
+.btn-black:hover{background:#fff;color:#0a0a10;transform:translateY(-3px)}
+.btn.full{width:100%;justify-content:center}
+
+/* ============ HERO ============ */
+.hero{position:relative;min-height:92vh;display:flex;align-items:center;overflow:hidden;z-index:1}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-grid{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(139,92,246,.07) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(139,92,246,.07) 1px,transparent 1px);
+  background-size:56px 56px;
+  -webkit-mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 30%,transparent 75%);
+          mask-image:radial-gradient(ellipse 80% 70% at 50% 40%,#000 30%,transparent 75%);
+}
+.orb{position:absolute;border-radius:50%;filter:blur(70px);opacity:.5}
+.o1{width:420px;height:420px;background:var(--roxo-2);top:-120px;right:8%;animation:orbFloat 12s ease-in-out infinite}
+.o2{width:300px;height:300px;background:#4C1D95;bottom:-80px;left:-60px;animation:orbFloat 16s ease-in-out infinite reverse}
+.o3{width:160px;height:160px;background:var(--roxo-neon);top:40%;left:44%;opacity:.25;animation:orbFloat 9s ease-in-out infinite}
+@keyframes orbFloat{0%,100%{transform:translate(0,0)}50%{transform:translate(40px,-40px)}}
+.hero-in{
+  max-width:1240px;margin:0 auto;padding:90px 24px 60px;position:relative;z-index:2;
+  display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;width:100%;
+}
+.eyebrow{
+  display:inline-flex;align-items:center;gap:10px;font-family:var(--disp);font-size:.68rem;
+  letter-spacing:.28em;color:var(--roxo-neon);border:1px solid var(--borda);padding:.6rem 1rem;
+  opacity:0;animation:fadeUp .8s 1.45s var(--ease) forwards;
+}
+.eyebrow i{width:8px;height:8px;background:var(--roxo);border-radius:50%;box-shadow:0 0 12px var(--roxo);animation:blink 1.6s infinite}
+@keyframes blink{50%{opacity:.3}}
+.hero h1{
+  font-family:var(--disp);font-weight:900;font-size:clamp(2.9rem,7.4vw,6rem);
+  line-height:.98;letter-spacing:-.01em;margin:26px 0 22px;text-transform:uppercase;
+}
+.line{display:block;overflow:hidden;padding-bottom:.06em}
+.line-in{display:inline-block;transform:translateY(115%);animation:lineUp 1s var(--ease) forwards}
+.l1{animation-delay:1.55s}.l2{animation-delay:1.7s}
+@keyframes lineUp{to{transform:translateY(0)}}
+.stroke{color:transparent;-webkit-text-stroke:2px var(--roxo)}
+.stroke .dot{color:var(--roxo);-webkit-text-stroke:0}
+.lead{color:var(--cinza);max-width:46ch;font-size:1.05rem;opacity:0;animation:fadeUp .8s 1.9s var(--ease) forwards}
+.hero-cta{display:flex;gap:16px;flex-wrap:wrap;margin-top:34px;opacity:0;animation:fadeUp .8s 2.05s var(--ease) forwards}
+.hero-stats{display:flex;gap:0;margin-top:48px;opacity:0;animation:fadeUp .8s 2.2s var(--ease) forwards}
+.stat{padding:0 28px;border-left:1px solid var(--borda)}
+.stat:first-child{padding-left:0;border-left:0}
+.stat strong{font-family:var(--disp);font-weight:800;font-size:1.7rem;display:block;color:var(--branco)}
+.stat span{font-size:.78rem;color:var(--cinza);letter-spacing:.05em}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px);filter:blur(6px)}to{opacity:1;transform:none;filter:blur(0)}}
+
+.hero-stage{position:relative;height:560px;display:grid;place-items:center}
+.ring{position:absolute;border-radius:50%;left:50%;top:50%;translate:-50% -50%}
+.r1{width:440px;height:440px;border:1.5px dashed rgba(139,92,246,.4);animation:spin 30s linear infinite;opacity:0;animation:spin 30s linear infinite,fadeUp 1s 2s forwards}
+.r2{width:580px;height:580px;border:1px solid rgba(255,255,255,.07);animation:spinR 48s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@keyframes spinR{to{transform:rotate(-360deg)}}
+.glow{position:absolute;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,var(--roxo-glow),transparent 65%);filter:blur(40px);animation:pulse 5s ease-in-out infinite}
+@keyframes pulse{50%{transform:scale(1.18);opacity:.75}}
+/* rastros de motion blur atrás do tênis */
+.swoosh{
+  position:absolute;width:130%;height:80px;left:-15%;top:46%;
+  background:linear-gradient(90deg,transparent,var(--roxo) 30%,#fff 50%,var(--roxo) 70%,transparent);
+  filter:blur(24px);transform:rotate(-24deg);opacity:.4;
+  animation:swooshMove 5s ease-in-out infinite;
+}
+.sw2{height:40px;top:56%;opacity:.22;animation-delay:-2.5s}
+@keyframes swooshMove{0%,100%{transform:rotate(-24deg) translateX(-6%);opacity:.3}50%{transform:rotate(-24deg) translateX(6%);opacity:.55}}
+.shoe-wrap{position:relative;z-index:3;will-change:transform}
+.hero-shoe{
+  width:min(560px,86vw);filter:drop-shadow(0 40px 60px rgba(0,0,0,.55));
+  animation:shoeIn 1.1s var(--ease) 1.75s both,float 6s ease-in-out 3s infinite;
+}
+@keyframes shoeIn{0%{opacity:0;transform:scale(.68) translateY(70px) rotate(8deg);filter:blur(26px)}60%{filter:blur(0)}100%{opacity:1;transform:scale(1) translateY(0) rotate(0);filter:blur(0)}}
+@keyframes float{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-20px) rotate(-2deg)}}
+.chip{
+  position:absolute;z-index:4;background:rgba(11,11,19,.85);backdrop-filter:blur(8px);
+  border:1px solid var(--borda);padding:.7rem 1rem;font-size:.8rem;color:var(--cinza);
+  opacity:0;animation:fadeUp .7s var(--ease) forwards;white-space:nowrap;
+}
+.chip strong,.chip em{color:var(--branco);font-style:normal}
+.chip .roxo{color:var(--roxo-neon)}
+.chip-1{top:12%;right:4%;animation-delay:2.35s}
+.chip-2{bottom:16%;left:0;animation-delay:2.5s}
+.chip-3{top:44%;right:-2%;background:var(--roxo);color:#0a0a10;font-family:var(--disp);font-size:.62rem;letter-spacing:.12em;font-weight:600;border:0;animation-delay:2.65s}
+.scroll-hint{
+  position:absolute;left:50%;bottom:22px;translate:-50% 0;z-index:3;text-decoration:none;
+  color:var(--cinza);font-size:.68rem;letter-spacing:.3em;text-transform:uppercase;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
+  opacity:0;animation:fadeUp .8s 2.9s forwards;
+}
+.scroll-hint span{width:1px;height:44px;background:linear-gradient(var(--roxo),transparent);position:relative;overflow:hidden}
+.scroll-hint span::after{content:"";position:absolute;top:-10px;left:0;width:1px;height:12px;background:#fff;animation:drip 1.6s ease-in-out infinite}
+@keyframes drip{to{top:50px}}
+
+/* ============ FAIXA MARQUEE ============ */
+.strip{border-block:1px solid var(--borda);padding:26px 0;overflow:hidden;position:relative;z-index:1;background:rgba(11,11,19,.4)}
+.strip-track{display:flex;width:max-content;animation:mq 30s linear infinite}
+.strip-group{display:flex;align-items:center;gap:2.4rem;padding-right:2.4rem}
+.strip-group span{font-family:var(--disp);font-weight:800;font-size:clamp(1.8rem,3.4vw,3rem);text-transform:uppercase;white-space:nowrap}
+.s-solid{color:var(--roxo)}
+.s-outline{color:transparent;-webkit-text-stroke:1.5px rgba(244,242,255,.55)}
+.strip-group i{color:var(--roxo);font-style:normal;font-size:1.4rem}
+
+/* ============ SEÇÕES ============ */
+.sec{padding:104px 0;position:relative;z-index:1}
+.kicker{font-size:.72rem;letter-spacing:.3em;text-transform:uppercase;color:var(--cinza);margin-bottom:14px}
+.kicker b{color:var(--roxo);font-weight:700}
+.sec-row{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap}
+h2{font-family:var(--disp);font-weight:800;font-size:clamp(1.9rem,4vw,3rem);line-height:1.08;text-transform:uppercase}
+.out{color:transparent;-webkit-text-stroke:1.5px var(--roxo)}
+.link-arrow{color:var(--cinza);text-decoration:none;font-weight:500;transition:.3s;white-space:nowrap}
+.link-arrow:hover{color:var(--roxo-neon);letter-spacing:.04em}
+.rv{opacity:0;transform:translateY(36px);filter:blur(10px);transition:opacity .9s var(--ease),transform .9s var(--ease),filter .9s var(--ease)}
+.rv.in{opacity:1;transform:none;filter:blur(0)}
+
+/* ============ CATEGORIAS ============ */
+.cats{display:grid;grid-template-columns:1.15fr 1fr 1fr;grid-template-rows:repeat(2,232px);gap:18px;margin-top:48px}
+.cat{position:relative;overflow:hidden;border:1px solid var(--borda);text-decoration:none;color:#fff;transition:border-color .4s}
+.cat:hover{border-color:var(--roxo)}
+.cat-big{grid-row:span 2}
+.cat-wide{grid-column:span 2}
+.cat img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .9s var(--ease),filter .5s}
+.cat:hover img{transform:scale(1.09);filter:saturate(1.2)}
+.cat::after{content:"";position:absolute;inset:0;background:linear-gradient(to top,rgba(5,5,8,.92) 0%,rgba(5,5,8,.25) 45%,transparent 70%)}
+.cat-info{position:absolute;left:20px;right:20px;bottom:18px;z-index:2;display:flex;align-items:flex-end;gap:14px}
+.cat-info h3{font-family:var(--disp);font-weight:800;font-size:1.35rem;text-transform:uppercase}
+.cat-count{font-size:.72rem;color:var(--roxo-neon);letter-spacing:.15em;text-transform:uppercase;display:block;margin-bottom:4px}
+.cat-arrow{
+  margin-left:auto;width:40px;height:40px;flex-shrink:0;display:grid;place-items:center;
+  border:1px solid rgba(255,255,255,.4);font-size:1.1rem;transition:.4s var(--ease);
+}
+.cat:hover .cat-arrow{background:var(--roxo);border-color:var(--roxo);color:#0a0a10;transform:rotate(-45deg)}
+
+/* ============ PRODUTOS ============ */
+.tabs{display:flex;gap:6px;flex-wrap:wrap}
+.tab{
+  background:none;border:1px solid transparent;color:var(--cinza);font-weight:600;font-size:.88rem;
+  padding:.55rem 1.15rem;cursor:pointer;transition:.3s;
+}
+.tab:hover{color:var(--branco)}
+.tab.active{background:var(--roxo);color:#0a0a10;clip-path:polygon(0 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(256px,1fr));gap:22px;margin-top:46px}
+.card{
+  background:var(--preto-3);border:1px solid var(--borda);position:relative;
+  transition:transform .45s var(--ease),border-color .45s,box-shadow .45s;
+  animation:cardIn .7s var(--ease) both;animation-delay:var(--d,0ms);
+}
+@keyframes cardIn{from{opacity:0;transform:translateY(32px) scale(.97);filter:blur(12px)}to{opacity:1;transform:none;filter:blur(0)}}
+.card:hover{transform:translateY(-9px);border-color:var(--roxo);box-shadow:0 26px 55px -22px var(--roxo-glow)}
+.card-media{position:relative;aspect-ratio:1;overflow:hidden;background:#16161f}
+.card-media img{width:100%;height:100%;object-fit:cover;transition:transform .6s var(--ease)}
+/* snap com motion blur no hover */
+.card:hover .card-media img{animation:snap .55s var(--ease) both}
+@keyframes snap{0%{transform:scale(1.2) translateX(8%);filter:blur(12px)}100%{transform:scale(1.12) translateX(0);filter:blur(0)}}
+.flag{position:absolute;top:12px;left:12px;z-index:2;font-family:var(--disp);font-size:.6rem;font-weight:600;letter-spacing:.14em;padding:.42rem .6rem}
+.b-novo{background:var(--roxo);color:#0a0a10}
+.b-hot{background:#fff;color:#0a0a10}
+.b-off{background:#0a0a10;color:#fff;border:1px solid rgba(255,255,255,.35)}
+.fav{
+  position:absolute;top:10px;right:10px;z-index:2;width:36px;height:36px;cursor:pointer;
+  background:rgba(5,5,8,.6);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.18);
+  color:var(--cinza);font-size:1rem;display:grid;place-items:center;transition:.3s;
+}
+.fav:hover{border-color:var(--roxo);color:var(--roxo-neon)}
+.fav.active{color:var(--roxo);border-color:var(--roxo);animation:pop .4s var(--ease)}
+.quick{
+  position:absolute;left:0;right:0;bottom:0;z-index:2;border:0;cursor:pointer;
+  background:var(--roxo);color:#0a0a10;font-family:var(--disp);font-size:.68rem;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;padding:.95rem;
+  transform:translateY(105%);transition:transform .4s var(--ease),background .3s;
+}
+.card:hover .quick{transform:none}
+.quick:hover{background:#fff}
+@media(hover:none){.quick{transform:none}}
+.card-info{padding:18px}
+.card-cat{font-size:.68rem;letter-spacing:.22em;text-transform:uppercase;color:var(--roxo-neon)}
+.card-info h3{font-family:var(--disp);font-weight:600;font-size:.98rem;margin:8px 0 6px}
+.card-rate{font-size:.82rem;color:var(--cinza)}
+.stars{color:var(--roxo);letter-spacing:2px;margin-right:4px}
+.card-rate em{font-style:normal;opacity:.6}
+.card-price{display:flex;align-items:baseline;gap:10px;margin-top:12px}
+.card-price strong{font-size:1.12rem;font-weight:700}
+.card-price s{color:var(--cinza);font-size:.85rem}
+.vazio{grid-column:1/-1;text-align:center;color:var(--cinza);padding:60px 0;font-size:1rem}
+
+/* ============ DROP / COUNTDOWN ============ */
+.drop{background:var(--roxo-2);position:relative;overflow:hidden;z-index:1}
+.drop::before{
+  content:"";position:absolute;inset:0;
+  background:repeating-linear-gradient(-55deg,rgba(0,0,0,.07) 0 2px,transparent 2px 26px);
+}
+.drop-in{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:center;padding:96px 24px}
+.drop .kicker{color:rgba(0,0,0,.55)}
+.drop .kicker b{color:#0a0a10}
+.drop-title{font-family:var(--disp);font-weight:900;font-size:clamp(2.6rem,6vw,4.6rem);line-height:.95;color:#0a0a10;text-transform:uppercase;margin-bottom:20px}
+.drop-title span{color:#fff}
+.drop-copy p{color:rgba(0,0,0,.7);max-width:44ch;font-weight:500}
+.drop-copy .btn{margin-top:30px}
+.drop-right{position:relative;display:flex;flex-direction:column;align-items:center;gap:34px}
+.drop-shoe{position:relative}
+.drop-shoe img{width:min(430px,78vw);transform:rotate(-14deg);filter:drop-shadow(0 34px 44px rgba(0,0,0,.45));animation:float 6s ease-in-out infinite;position:relative;z-index:2}
+.sw3{
+  position:absolute;width:150%;height:70px;left:-25%;top:44%;z-index:1;
+  background:linear-gradient(90deg,transparent,#fff 35%,#0a0a10 50%,#fff 65%,transparent);
+  filter:blur(22px);opacity:.35;transform:rotate(-14deg);animation:swooshMove 4.5s ease-in-out infinite;
+}
+.count{display:flex;gap:12px}
+.cd{background:#0a0a10;color:#fff;min-width:88px;padding:18px 10px 14px;text-align:center;clip-path:polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%)}
+.cd strong{font-family:var(--disp);font-weight:800;font-size:2.1rem;display:block;line-height:1}
+.cd span{font-size:.62rem;letter-spacing:.24em;text-transform:uppercase;color:rgba(255,255,255,.55)}
+.drop-tape{background:#0a0a10;overflow:hidden;position:relative;z-index:2}
+.tape-track{display:flex;width:max-content;animation:mq 20s linear infinite}
+.drop-tape span{font-family:var(--disp);font-size:.7rem;font-weight:600;letter-spacing:.22em;color:#fff;padding:.8rem 1.6rem;white-space:nowrap}
+.drop-tape i{color:var(--roxo);font-style:normal}
+
+/* ============ REVIEWS ============ */
+.rev-marquee{overflow:hidden;margin-top:52px;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.rev-track{display:flex;gap:20px;width:max-content;animation:mq 46s linear infinite}
+.rev-marquee:hover .rev-track{animation-play-state:paused}
+.rev{
+  width:340px;flex-shrink:0;background:var(--preto-3);border:1px solid var(--borda);
+  padding:28px;position:relative;transition:.35s;
+}
+.rev:hover{border-color:var(--roxo);transform:translateY(-6px)}
+.rev::before{content:"“";font-family:var(--disp);font-size:3.4rem;color:var(--roxo);position:absolute;top:6px;right:20px;opacity:.5;line-height:1}
+.rev p{color:var(--cinza);font-size:.94rem;margin:10px 0 20px}
+.rev-foot{display:flex;align-items:center;gap:12px}
+.avatar{width:42px;height:42px;border-radius:50%;background:rgba(139,92,246,.15);border:1px solid var(--roxo);color:var(--roxo-neon);display:grid;place-items:center;font-family:var(--disp);font-weight:800;font-size:.8rem}
+.rev-foot strong{display:block;font-size:.9rem}
+.rev-foot span{font-size:.75rem;color:var(--cinza)}
+
+/* ============ CLUBE ============ */
+.clube{position:relative;overflow:hidden;padding:120px 0;border-top:1px solid var(--borda);z-index:1}
+.clube::before{
+  content:"CLUBE VÓRTICE";position:absolute;top:50%;left:50%;translate:-50% -50%;
+  font-family:var(--disp);font-weight:900;font-size:17vw;white-space:nowrap;
+  color:transparent;-webkit-text-stroke:1px rgba(139,92,246,.1);pointer-events:none;
+}
+.clube-in{max-width:640px}
+.clube p{color:var(--cinza);margin-top:16px;max-width:48ch}
+.clube-form{display:flex;gap:12px;margin-top:34px;flex-wrap:wrap}
+.clube-form input{
+  flex:1;min-width:240px;background:var(--preto-3);border:1px solid var(--borda);
+  color:var(--branco);padding:1.05rem 1.3rem;font-family:var(--body);font-size:.95rem;transition:.3s;
+}
+.clube-form input:focus{outline:none;border-color:var(--roxo);box-shadow:0 0 0 3px rgba(139,92,246,.18)}
+.clube-note{display:block;margin-top:18px;font-size:.8rem;color:var(--cinza);letter-spacing:.06em}
+
+/* ============ FOOTER ============ */
+footer{background:#040407;border-top:1px solid var(--borda);position:relative;z-index:1}
+.foot-grid{display:grid;grid-template-columns:1.8fr 1fr 1fr 1.2fr;gap:44px;padding:70px 24px 50px}
+.foot-brand p{color:var(--cinza);font-size:.9rem;margin:16px 0 22px;max-width:32ch}
+.socials{display:flex;gap:10px}
+.soc{
+  width:40px;height:40px;display:grid;place-items:center;border:1px solid rgba(255,255,255,.18);
+  color:var(--branco);text-decoration:none;font-family:var(--disp);font-size:.62rem;font-weight:800;transition:.3s;
+}
+.soc:hover{background:var(--roxo);border-color:var(--roxo);color:#0a0a10;transform:translateY(-4px) rotate(-6deg)}
+.foot-col h4{font-family:var(--disp);font-size:.78rem;font-weight:600;letter-spacing:.18em;text-transform:uppercase;margin-bottom:20px;color:var(--roxo-neon)}
+.foot-col a{display:block;color:var(--cinza);text-decoration:none;font-size:.9rem;margin-bottom:12px;transition:.3s}
+.foot-col a:hover{color:var(--branco);padding-left:8px}
+.foot-bottom{
+  display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap;
+  padding:22px 24px;border-top:1px solid rgba(255,255,255,.06);font-size:.8rem;color:var(--cinza);
+}
+.pays{display:flex;gap:8px;flex-wrap:wrap}
+.pays span{border:1px solid rgba(255,255,255,.16);padding:.35rem .7rem;font-family:var(--disp);font-size:.58rem;font-weight:600;letter-spacing:.12em}
+
+/* ============ SACOLA ============ */
+#overlay{position:fixed;inset:0;background:rgba(3,3,6,.72);backdrop-filter:blur(5px);z-index:1100;opacity:0;pointer-events:none;transition:.45s}
+#overlay.open{opacity:1;pointer-events:auto}
+#cart{
+  position:fixed;top:0;right:0;bottom:0;width:min(432px,94vw);z-index:1200;
+  background:var(--preto-2);border-left:1px solid var(--borda);
+  transform:translateX(105%);transition:transform .55s var(--ease);
+  display:flex;flex-direction:column;
+}
+#cart.open{transform:none}
+.cart-head{display:flex;align-items:center;justify-content:space-between;padding:22px 24px;border-bottom:1px solid var(--borda)}
+.cart-head h3{font-family:var(--disp);font-size:1rem;font-weight:800;text-transform:uppercase}
+.cart-head span{color:var(--roxo-neon)}
+#fecharCart{background:none;border:1px solid rgba(255,255,255,.16);color:var(--branco);width:38px;height:38px;cursor:pointer;transition:.3s}
+#fecharCart:hover{border-color:var(--roxo);color:var(--roxo-neon);transform:rotate(90deg)}
+.cart-items{flex:1;overflow-y:auto;padding:20px 24px}
+.ci{display:grid;grid-template-columns:74px 1fr auto;gap:14px;padding:12px;background:var(--preto-3);border:1px solid var(--borda);margin-bottom:12px;animation:ciIn .45s var(--ease) both}
+@keyframes ciIn{from{opacity:0;transform:translateX(30px);filter:blur(6px)}to{opacity:1;transform:none;filter:blur(0)}}
+.ci img{width:74px;height:74px;object-fit:cover}
+.ci h4{font-family:var(--disp);font-size:.78rem;font-weight:600;margin-bottom:4px}
+.ci .ci-preco{color:var(--roxo-neon);font-weight:700;font-size:.9rem}
+.qty{display:inline-flex;border:1px solid var(--borda);margin-top:8px}
+.qty button{width:26px;height:26px;background:none;border:0;color:var(--branco);cursor:pointer;transition:.2s}
+.qty button:hover{background:var(--roxo);color:#0a0a10}
+.qty b{width:30px;display:grid;place-items:center;font-size:.85rem}
+.ci-rem{background:none;border:0;color:var(--cinza);cursor:pointer;font-size:1rem;align-self:start;transition:.3s}
+.ci-rem:hover{color:#ff6b8a;transform:scale(1.2)}
+.cart-vazia{text-align:center;color:var(--cinza);padding:70px 10px}
+.cart-vazia .sac{font-size:3rem;display:block;margin-bottom:14px;filter:grayscale(.4)}
+.cart-foot{padding:20px 24px;border-top:1px solid var(--borda)}
+.cf-row{display:flex;justify-content:space-between;font-size:.9rem;color:var(--cinza);margin-bottom:10px}
+.cf-row strong{color:var(--branco)}
+.cf-row.total{font-size:1.05rem;margin:14px 0 18px;padding-top:14px;border-top:1px dashed rgba(255,255,255,.14)}
+.cf-row.total strong{font-family:var(--disp);font-size:1.2rem;color:var(--roxo-neon)}
+.frete-bar{height:4px;background:rgba(255,255,255,.1);margin-bottom:8px;overflow:hidden}
+.frete-bar i{display:block;height:100%;width:0;background:var(--roxo);box-shadow:0 0 10px var(--roxo-glow);transition:width .6s var(--ease)}
+#freteMsg{font-size:.76rem;color:var(--cinza);margin-bottom:16px}
+#freteMsg b{color:var(--roxo-neon)}
+
+/* ============ TOASTS / TOPO ============ */
+#toasts{position:fixed;left:20px;bottom:20px;z-index:1300;display:flex;flex-direction:column;gap:10px}
+.toast{
+  background:var(--preto-3);border:1px solid var(--borda);border-left:3px solid var(--roxo);
+  padding:14px 18px;font-size:.88rem;max-width:330px;box-shadow:0 16px 40px rgba(0,0,0,.5);
+  animation:tIn .45s var(--ease);
+}
+.toast.out{animation:tOut .35s forwards}
+@keyframes tIn{from{opacity:0;transform:translateX(-36px);filter:blur(8px)}to{opacity:1;transform:none;filter:blur(0)}}
+@keyframes tOut{to{opacity:0;transform:translateX(-36px)}}
+#topo{
+  position:fixed;right:22px;bottom:22px;width:46px;height:46px;z-index:950;cursor:pointer;
+  background:var(--roxo);color:#0a0a10;border:0;font-size:1.15rem;font-weight:700;
+  opacity:0;transform:translateY(18px);pointer-events:none;transition:.4s var(--ease);
+  clip-path:polygon(0 0,100% 0,100% calc(100% - 10px),calc(100% - 10px) 100%,0 100%);
+}
+#topo.show{opacity:1;transform:none;pointer-events:auto}
+#topo:hover{background:#fff}
+
+/* ============ RESPONSIVO ============ */
+@media(max-width:1024px){
+  .hero-in{grid-template-columns:1fr;padding-top:70px}
+  .hero-stage{height:460px;order:-1;margin-top:10px}
+  .hero-shoe{width:min(430px,82vw)}
+  .r2{width:480px;height:480px}
+  .drop-in{grid-template-columns:1fr;padding:80px 24px}
+  .foot-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:900px){
+  .links{display:none}
+  .hamburger{display:flex}
+  .mobile-menu{display:flex}
+  .cats{grid-template-columns:1fr;grid-template-rows:none}
+  .cat{height:210px}
+  .cat-big{height:340px;grid-row:auto}
+  .cat-wide{grid-column:auto}
+}
+@media(max-width:640px){
+  .hero-stats{flex-wrap:wrap;gap:18px}
+  .stat{padding:0 18px}
+  .stat:first-child{padding-left:0}
+  .cd{min-width:70px}
+  .cd strong{font-size:1.6rem}
+  .chip-3{display:none}
+  .foot-grid{grid-template-columns:1fr;gap:34px}
+  .sec{padding:76px 0}
+}
+</style>
+</head>
+<body>
+
+<!-- PRELOADER -->
+<div id="preloader">
+  <div class="pre-logo">VÓRTICE<span>®</span></div>
+  <div class="pre-bar"><i></i></div>
+</div>
+
+<div id="progress"></div>
+
+<!-- TICKER -->
+<div class="ticker" aria-hidden="true">
+  <div class="ticker-track" data-clone>
+    <span>◆ FRETE GRÁTIS ACIMA DE R$ 299</span><span>◆ DROP 08 NO AR</span><span>◆ ATÉ 12X SEM JUROS</span><span>◆ TROCA FÁCIL EM 30 DIAS</span><span>◆ EDIÇÕES LIMITADAS — SEM RESTOCK</span>
+  </div>
+</div>
+
+<!-- NAV -->
+<header id="nav">
+  <div class="nav-in">
+    <a class="logo" href="#inicio">VÓRTICE<span>®</span></a>
+    <nav class="links">
+      <a href="#drop">Drop 08</a>
+      <a href="#categorias">Categorias</a>
+      <a href="#produtos">Produtos</a>
+      <a href="#clube">Clube</a>
+    </nav>
+    <div class="nav-acts">
+      <button class="icon-btn" id="btnBusca" aria-label="Buscar">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      </button>
+      <button class="icon-btn" id="abrirCart" aria-label="Abrir sacola">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 7h12l1 14H5L6 7Z"/><path d="M9 7a3 3 0 0 1 6 0"/></svg>
+        <span class="badge" id="cartCount">0</span>
+      </button>
+      <button class="hamburger" id="menuBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+  <nav class="mobile-menu" id="mobileMenu">
+    <a href="#drop">Drop 08</a>
+    <a href="#categorias">Categorias</a>
+    <a href="#produtos">Produtos</a>
+    <a href="#clube">Clube</a>
+  </nav>
+  <div class="wrap">
+    <div id="searchBar"><input id="searchInput" type="search" placeholder="Buscar no catálogo… (ex: tênis, headset, hoodie)"></div>
+  </div>
+</header>
+
+<main>
+<!-- ============ HERO ============ -->
+<section class="hero" id="inicio">
+  <div class="hero-bg">
+    <div class="hero-grid"></div>
+    <span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span>
+  </div>
+  <div class="hero-in">
+    <div class="hero-copy">
+      <p class="eyebrow"><i></i> DROP 08 — AGOSTO 2026</p>
+      <h1>
+        <span class="line"><span class="line-in l1">VISTA O</span></span>
+        <span class="line"><span class="line-in l2 stroke">FUTURO<span class="dot">.</span></span></span>
+      </h1>
+      <p class="lead">Sneakers, áudio e streetwear em edições limitadas. Quando o drop acaba, acabou — sem restock, sem desculpas.</p>
+      <div class="hero-cta">
+        <a href="#produtos" class="btn btn-solid">Ver o drop <span>→</span></a>
+        <a href="#categorias" class="btn btn-ghost">Explorar categorias</a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><strong class="count" data-target="120" data-suffix="+">0</strong><span>modelos exclusivos</span></div>
+        <div class="stat"><strong class="count" data-target="48" data-suffix="h">0</strong><span>entrega expressa</span></div>
+        <div class="stat"><strong class="count" data-target="4.9" data-decimals="1">0</strong><span>avaliação média</span></div>
+      </div>
+    </div>
+    <div class="hero-stage" id="stage">
+      <div class="ring r2"></div>
+      <div class="ring r1"></div>
+      <div class="glow"></div>
+      <div class="swoosh sw1"></div>
+      <div class="swoosh sw2"></div>
+      <div class="shoe-wrap" data-depth="26">
+        <img class="hero-shoe" src="https://images.unsplash.com/photo-1605348532760-6753d2c43329?auto=format&fit=crop&w=1100&q=80" alt="Tênis Ultraviolet One em roxo">
+      </div>
+      <div class="chip chip-1" data-depth="48"><span class="roxo">★ 5.0</span> · 530 reviews</div>
+      <div class="chip chip-2" data-depth="62"><em>R$ 999,90</em> · Ultraviolet One</div>
+      <div class="chip chip-3" data-depth="38">FRETE GRÁTIS ⚡</div>
+    </div>
+  </div>
+  <a class="scroll-hint" href="#categorias"><span></span>role para explorar</a>
+</section>
+
+<!-- FAIXA -->
+<div class="strip" aria-hidden="true">
+  <div class="strip-track" data-clone>
+    <div class="strip-group">
+      <span class="s-solid">Vórtice</span><i>✦</i><span class="s-outline">Drop 08</span><i>✦</i><span class="s-solid">Sneakers</span><i>✦</i><span class="s-outline">Áudio</span><i>✦</i><span class="s-solid">Streetwear</span><i>✦</i><span class="s-outline">Edição Limitada</span><i>✦</i>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CATEGORIAS ============ -->
+<section id="categorias" class="sec">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="kicker"><b>01</b> / Navegue</p>
+      <div class="sec-row">
+        <h2>Escolha seu <span class="out">território</span></h2>
+        <a class="link-arrow" href="#produtos">ver catálogo completo →</a>
+      </div>
+    </div>
+    <div class="cats">
+      <a class="cat cat-big rv" data-cat="tenis" href="#produtos">
+        <img src="https://images.unsplash.com/photo-1549298916-b41d501d3772?auto=format&fit=crop&w=900&q=80" alt="Categoria tênis" loading="lazy">
+        <div class="cat-info"><div><span class="cat-count">38 itens</span><h3>Tênis</h3></div><span class="cat-arrow">→</span></div>
+      </a>
+      <a class="cat rv" data-cat="audio" href="#produtos">
+        <img src="https://images.unsplash.com/photo-1484704849700-f032a568e944?auto=format&fit=crop&w=900&q=80" alt="Categoria áudio" loading="lazy">
+        <div class="cat-info"><div><span class="cat-count">17 itens</span><h3>Áudio</h3></div><span class="cat-arrow">→</span></div>
+      </a>
+      <a class="cat rv" data-cat="vestuario" href="#produtos">
+        <img src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=900&q=80" alt="Categoria vestuário" loading="lazy">
+        <div class="cat-info"><div><span class="cat-count">24 itens</span><h3>Vestuário</h3></div><span class="cat-arrow">→</span></div>
+      </a>
+      <a class="cat cat-wide rv" data-cat="acessorios" href="#produtos">
+        <img src="https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=1200&q=80" alt="Categoria acessórios" loading="lazy">
+        <div class="cat-info"><div><span class="cat-count">31 itens</span><h3>Acessórios</h3></div><span class="cat-arrow">→</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PRODUTOS ============ -->
+<section id="produtos" class="sec">
+  <div class="wrap">
+    <div class="sec-head rv">
+      <p class="kicker"><b>02</b> / Catálogo</p>
+      <div class="sec-row">
+        <h2>Drops que <span class="out">esgotam</span> rápido</h2>
+        <div class="tabs" id="tabs">
+          <button class="tab active" data-cat="todos">Todos</button>
+          <button class="tab" data-cat="tenis">Tênis</button>
+          <button class="tab" data-cat="audio">Áudio</button>
+          <button class="tab" data-cat="vestuario">Vestuário</button>
+          <button class="tab" data-cat="acessorios">Acessórios</button>
+        </div>
+      </div>
+    </div>
+    <div class="grid" id="grid"></div>
+  </div>
+</section>
+
+<!-- ============ PRÓXIMO DROP ============ -->
+<section id="drop" class="drop">
+  <div class="drop-in wrap">
+    <div class="drop-copy rv">
+      <p class="kicker"><b>03</b> / Próximo drop</p>
+      <h2 class="drop-title">Ultra<span>violet</span> One</h2>
+      <p>Apenas 300 pares numerados a laser. Malha reflexiva ultravioleta, espuma de retorno máximo e a colorway mais insana que já fizemos. Quando zerar, zerou.</p>
+      <a href="#produtos" class="btn btn-black">Garantir o meu →</a>
+    </div>
+    <div class="drop-right rv">
+      <div class="drop-shoe">
+        <span class="sw3"></span>
+        <img src="https://images.unsplash.com/photo-1605348532760-6753d2c43329?auto=format&fit=crop&w=900&q=80" alt="Tênis Ultraviolet One">
+      </div>
+      <div class="count" id="countdown" aria-label="Contagem regressiva para o próximo drop">
+        <div class="cd"><strong id="cd-d">00</strong><span>dias</span></div>
+        <div class="cd"><strong id="cd-h">00</strong><span>horas</span></div>
+        <div class="cd"><strong id="cd-m">00</strong><span>min</span></div>
+        <div class="cd"><strong id="cd-s">00</strong><span>seg</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="drop-tape" aria-hidden="true">
+    <div class="tape-track" data-clone>
+      <span>DROP 08 <i>✦</i> SEXTA — 20H <i>✦</i> 300 PARES <i>✦</i> SEM RESTOCK <i>✦</i> NUMERADO A LASER <i>✦</i></span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ REVIEWS ============ -->
+<section id="reviews" class="sec">
+  <div class="wrap rv">
+    <p class="kicker"><b>04</b> / Comunidade</p>
+    <div class="sec-row">
+      <h2>Quem usa, <span class="out">vicia</span></h2>
+      <span class="link-arrow">+12.400 avaliações verificadas</span>
+    </div>
+  </div>
+  <div class="rev-marquee rv">
+    <div class="rev-track" data-clone>
+      <div class="rev"><span class="stars">★★★★★</span><p>"O Ultraviolet One chegou em 2 dias e a qualidade é absurda. Nunca vi um acabamento assim nessa faixa de preço."</p><div class="rev-foot"><span class="avatar">RM</span><div><strong>Rafael M.</strong><span>comprou Ultraviolet One</span></div></div></div>
+      <div class="rev"><span class="stars">★★★★★</span><p>"Entrei pro clube achando que era hype. Hoje tenho 4 pares e o headset Órion. Virei cliente de verdade."</p><div class="rev-foot"><span class="avatar">JS</span><div><strong>Juliana S.</strong><span>membro do clube</span></div></div></div>
+      <div class="rev"><span class="stars">★★★★★</span><p>"O drop acabou em 40 minutos e eu garanti o meu. A sensação de exclusividade é outra coisa."</p><div class="rev-foot"><span class="avatar">PH</span><div><strong>Pedro H.</strong><span>comprou Nova Pulse X</span></div></div></div>
+      <div class="rev"><span class="stars">★★★★☆</span><p>"Troquei o tamanho sem burocracia nenhuma, em 3 dias já estava com o novo. Atendimento nota 10."</p><div class="rev-foot"><span class="avatar">AC</span><div><strong>Amanda C.</strong><span>comprou Hoodie Blackout</span></div></div></div>
+      <div class="rev"><span class="stars">★★★★★</span><p>"O cancelamento de ruído do Nebula Buds compete com fone do dobro do preço. Recomendo demais."</p><div class="rev-foot"><span class="avatar">LG</span><div><strong>Lucas G.</strong><span>comprou Nebula Buds</span></div></div></div>
+      <div class="rev"><span class="stars">★★★★★</span><p>"Embalagem impecável, produto numerado e um cheiro de novo que dura semanas. Experiência premium."</p><div class="rev-foot"><span class="avatar">BF</span><div><strong>Bia F.</strong><span>comprou Eclipse Watch S</span></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CLUBE ============ -->
+<section id="clube" class="clube">
+  <div class="wrap clube-in rv">
+    <p class="kicker"><b>05</b> / Clube Vórtice</p>
+    <h2>Entre antes de <span class="out">todo mundo</span></h2>
+    <p>Membros ficam sabendo do drop 24h antes, têm frete grátis permanente e acesso a peças secretas que nunca chegam à loja.</p>
+    <form id="formClube" class="clube-form">
+      <input type="email" id="emailClube" required placeholder="seu@email.com" aria-label="Seu e-mail">
+      <button class="btn btn-solid" type="submit">Entrar pro clube</button>
+    </form>
+    <span class="clube-note">+12.400 membros · sem spam, só drop 💜</span>
+  </div>
+</section>
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer>
+  <div class="wrap foot-grid">
+    <div class="foot-brand">
+      <a class="logo" href="#inicio">VÓRTICE<span>®</span></a>
+      <p>Streetwear, sneakers e áudio em edições limitadas. Feito no Brasil, pensado para durar — e para acabar rápido.</p>
+      <div class="socials">
+        <a class="soc" href="#" aria-label="Instagram">IG</a>
+        <a class="soc" href="#" aria-label="TikTok">TT</a>
+        <a class="soc" href="#" aria-label="YouTube">YT</a>
+        <a class="soc" href="#" aria-label="Discord">DC</a>
+      </div>
+    </div>
+    <div class="foot-col">
+      <h4>Loja</h4>
+      <a href="#produtos">Todos os produtos</a>
+      <a href="#drop">Drop 08</a>
+      <a href="#categorias">Tênis</a>
+      <a href="#categorias">Áudio</a>
+      <a href="#clube">Clube Vórtice</a>
+    </div>
+    <div class="foot-col">
+      <h4>Ajuda</h4>
+      <a href="#">Trocas e devoluções</a>
+      <a href="#">Prazos de entrega</a>
+      <a href="#">Guia de tamanhos</a>
+      <a href="#">Fale conosco</a>
+    </div>
+    <div class="foot-col">
+      <h4>Contato</h4>
+      <a href="mailto:oi@vortice.com.br">oi@vortice.com.br</a>
+      <a href="tel:+551140028922">(11) 4002-8922</a>
+      <a href="#">São Paulo — SP, Brasil</a>
+      <a href="#">Seg a Sex · 9h às 18h</a>
+    </div>
+  </div>
+  <div class="wrap foot-bottom">
+    <span>© 2026 VÓRTICE® — Todos os direitos reservados.</span>
+    <div class="pays"><span>PIX</span><span>VISA</span><span>MASTER</span><span>BOLETO</span><span>12X</span></div>
+  </div>
+</footer>
+
+<!-- SACOLA -->
+<div id="overlay"></div>
+<aside id="cart" aria-label="Sacola de compras">
+  <div class="cart-head">
+    <h3>Sua sacola <span id="cartN">(0)</span></h3>
+    <button id="fecharCart" aria-label="Fechar sacola">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems"></div>
+  <div class="cart-foot" id="cartFoot">
+    <div class="cf-row"><span>Subtotal</span><strong id="cSub">R$ 0,00</strong></div>
+    <div class="cf-row"><span>Frete</span><strong id="cFrete">—</strong></div>
+    <div class="cf-row total"><span>Total</span><strong id="cTotal">R$ 0,00</strong></div>
+    <div class="frete-bar"><i id="freteFill"></i></div>
+    <p id="freteMsg"></p>
+    <button class="btn btn-solid full" id="checkout">Finalizar compra →</button>
+  </div>
+</aside>
+
+<div id="toasts"></div>
+<button id="topo" aria-label="Voltar ao topo">↑</button>
+
+<script>
+/* ================= DADOS ================= */
+const CAT = {tenis:'Tênis', audio:'Áudio', vestuario:'Vestuário', acessorios:'Acessórios'};
+const PRODUTOS = [
+  {id:1,  nome:'Nova Pulse X',      cat:'tenis',      preco:899.90,  precoAntigo:null,    img:'photo-1542291026-7eec264c27ff', badge:'NOVO', nota:4.9, rev:321},
+  {id:2,  nome:'Aether Cloud',      cat:'tenis',      preco:649.90,  precoAntigo:799.90,  img:'photo-1606107557195-0e29a4b5b4aa', badge:null, nota:4.7, rev:188},
+  {id:3,  nome:'Órion Headset Pro', cat:'audio',      preco:1299.90, precoAntigo:null,    img:'photo-1505740420928-5e560c06d30e', badge:'NOVO', nota:4.8, rev:412},
+  {id:4,  nome:'Void Runner',       cat:'tenis',      preco:759.90,  precoAntigo:null,    img:'photo-1608231387042-66d1773070a5', badge:null, nota:4.6, rev:97},
+  {id:5,  nome:'Eclipse Watch S',   cat:'acessorios', preco:1199.90, precoAntigo:1399.90, img:'photo-1523275335684-37898b6baf30', badge:'-14%', nota:4.9, rev:264},
+  {id:6,  nome:'Ultraviolet One',   cat:'tenis',      preco:999.90,  precoAntigo:null,    img:'photo-1605348532760-6753d2c43329', badge:'HOT', nota:5.0, rev:530},
+  {id:7,  nome:'Nebula Buds ANC',   cat:'audio',      preco:499.90,  precoAntigo:null,    img:'photo-1583394838336-acd977736f90', badge:null, nota:4.5, rev:143},
+  {id:8,  nome:'Hoodie Blackout',   cat:'vestuario',  preco:349.90,  precoAntigo:429.90,  img:'photo-1556821840-3a63f95609a7', badge:'-19%', nota:4.8, rev:208},
+  {id:9,  nome:'Phantom Shades',    cat:'acessorios', preco:289.90,  precoAntigo:null,    img:'photo-1572635196237-14b3f281503f', badge:null, nota:4.6, rev:76},
+  {id:10, nome:'Cargo Pack V',      cat:'acessorios', preco:429.90,  precoAntigo:null,    img:'photo-1553062407-98eeb64c6a62', badge:'NOVO', nota:4.7, rev:154},
+];
+const url = img => `https://images.unsplash.com/${img}?auto=format&fit=crop&w=800&q=80`;
+const fmt = v => v.toLocaleString('pt-BR',{style:'currency',currency:'BRL'});
+const $  = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+
+const estado = {cat:'todos', q:''};
+const sacola = new Map();
+const favs   = new Set();
+
+/* ================= MARQUEES (duplica p/ loop infinito) ================= */
+$$('[data-clone]').forEach(el => el.innerHTML += el.innerHTML);
+
+/* ================= CATÁLOGO ================= */
+function badgeClass(b){ return b.includes('%') ? 'b-off' : (b === 'HOT' ? 'b-hot' : 'b-novo'); }
+
+function renderProdutos(){
+  const grid = $('#grid');
+  const q = estado.q.trim().toLowerCase();
+  const lista = PRODUTOS.filter(p =>
+    (estado.cat === 'todos' || p.cat === estado.cat) &&
+    (!q || p.nome.toLowerCase().includes(q) || CAT[p.cat].toLowerCase().includes(q))
+  );
+  if(!lista.length){
+    grid.innerHTML = `<div class="vazio">Nada encontrado por aqui… 🔍<br>Tenta outra busca ou volta pro drop.</div>`;
+    return;
+  }
+  grid.innerHTML = lista.map((p,i) => `
+    <article class="card" style="--d:${i*70}ms">
+      <div class="card-media">
+        ${p.badge ? `<span class="flag ${badgeClass(p.badge)}">${p.badge}</span>` : ''}
+        <button class="fav ${favs.has(p.id)?'active':''}" data-fav="${p.id}" aria-label="Favoritar ${p.nome}">♥</button>
+        <img src="${url(p.img)}" alt="${p.nome}" loading="lazy">
+        <button class="quick" data-add="${p.id}">+ Adicionar à sacola</button>
+      </div>
+      <div class="card-info">
+        <span class="card-cat">${CAT[p.cat]}</span>
+        <h3>${p.nome}</h3>
+        <div class="card-rate"><span class="stars">${'★'.repeat(Math.round(p.nota))}</span>${p.nota.toFixed(1)} <em>(${p.rev})</em></div>
+        <div class="card-price">
+          <strong>${fmt(p.preco)}</strong>
+          ${p.precoAntigo ? `<s>${fmt(p.precoAntigo)}</s>` : ''}
+        </div>
+      </div>
+    </article>`).join('');
+}
+renderProdutos();
+
+/* filtros */
+$('#tabs').addEventListener('click', e => {
+  const t = e.target.closest('.tab'); if(!t) return;
+  $$('.tab').forEach(x => x.classList.remove('active'));
+  t.classList.add('active');
+  estado.cat = t.dataset.cat;
+  renderProdutos();
+});
+$$('.cat').forEach(a => a.addEventListener('click', () => {
+  estado.cat = a.dataset.cat;
+  $$('.tab').forEach(x => x.classList.toggle('active', x.dataset.cat === estado.cat));
+  renderProdutos();
+}));
+
+/* busca */
+$('#btnBusca').addEventListener('click', () => {
+  const bar = $('#searchBar');
+  bar.classList.toggle('open');
+  if(bar.classList.contains('open')) setTimeout(()=>$('#searchInput').focus(), 250);
+});
+$('#searchInput').addEventListener('input', e => { estado.q = e.target.value; renderProdutos(); });
+
+/* ações do grid (delegação) */
+$('#grid').addEventListener('click', e => {
+  const add = e.target.closest('[data-add]');
+  const fav = e.target.closest('[data-fav]');
+  if(add){ addToCart(+add.dataset.add); }
+  if(fav){
+    const id = +fav.dataset.fav;
+    if(favs.has(id)){ favs.delete(id); fav.classList.remove('active'); }
+    else { favs.add(id); fav.classList.add('active'); toast('Salvo nos favoritos 💜'); }
+  }
+});
+
+/* ================= SACOLA ================= */
+function addToCart(id){
+  const p = PRODUTOS.find(x => x.id === id); if(!p) return;
+  const item = sacola.get(id);
+  item ? item.qtd++ : sacola.set(id, {...p, qtd:1});
+  renderCart();
+  const b = $('#cartCount');
+  b.classList.remove('pop'); void b.offsetWidth; b.classList.add('pop');
+  toast(`<strong>${p.nome}</strong> adicionado à sacola ✓`);
+}
+function renderCart(){
+  const items = [...sacola.values()];
+  const n = items.reduce((s,i)=>s+i.qtd,0);
+  $('#cartCount').textContent = n;
+  $('#cartN').textContent = `(${n})`;
+  const box = $('#cartItems');
+
+  if(!items.length){
+    box.innerHTML = `<div class="cart-vazia"><span class="sac">🛍️</span>Sua sacola está vazia.<br>O drop não espera ninguém…</div>`;
+    $('#cartFoot').style.display = 'none';
+    return;
+  }
+  $('#cartFoot').style.display = 'block';
+  box.innerHTML = items.map((i,ix) => `
+    <div class="ci" style="animation-delay:${ix*60}ms">
+      <img src="${url(i.img)}" alt="${i.nome}">
+      <div>
+        <h4>${i.nome}</h4>
+        <span class="ci-preco">${fmt(i.preco)}</span>
+        <div class="qty">
+          <button data-act="dec" data-id="${i.id}" aria-label="Diminuir">−</button>
+          <b>${i.qtd}</b>
+          <button data-act="inc" data-id="${i.id}" aria-label="Aumentar">+</button>
+        </div>
+      </div>
+      <button class="ci-rem" data-act="rem" data-id="${i.id}" aria-label="Remover">✕</button>
+    </div>`).join('');
+
+  const sub = items.reduce((s,i)=>s+i.preco*i.qtd,0);
+  const frete = sub >= 299 ? 0 : 19.90;
+  $('#cSub').textContent = fmt(sub);
+  $('#cFrete').textContent = frete === 0 ? 'Grátis 🎉' : fmt(frete);
+  $('#cTotal').textContent = fmt(sub + frete);
+  $('#freteFill').style.width = Math.min(100, sub/299*100) + '%';
+  $('#freteMsg').innerHTML = frete === 0
+    ? '<b>Frete grátis desbloqueado!</b>'
+    : `Faltam <b>${fmt(299-sub)}</b> para o frete grátis`;
+}
+$('#cartItems').addEventListener('click', e => {
+  const b = e.target.closest('button'); if(!b) return;
+  const id = +b.dataset.id, it = sacola.get(id); if(!it) return;
+  if(b.dataset.act === 'inc') it.qtd++;
+  if(b.dataset.act === 'dec'){ it.qtd--; if(it.qtd < 1) sacola.delete(id); }
+  if(b.dataset.act === 'rem') sacola.delete(id);
+  renderCart();
+});
+const abrirCart  = () => { $('#cart').classList.add('open');  $('#overlay').classList.add('open');  document.body.style.overflow='hidden'; };
+const fecharCart = () => { $('#cart').classList.remove('open'); $('#overlay').classList.remove('open'); document.body.style.overflow=''; };
+$('#abrirCart').addEventListener('click', abrirCart);
+$('#fecharCart').addEventListener('click', fecharCart);
+$('#overlay').addEventListener('click', fecharCart);
+document.addEventListener('keydown', e => { if(e.key === 'Escape') fecharCart(); });
+$('#checkout').addEventListener('click', () => {
+  toast('Pedido confirmado! 💜 (demo — nenhum pagamento real)');
+  sacola.clear(); renderCart();
+  setTimeout(fecharCart, 900);
+});
+renderCart();
+
+/* ================= TOASTS ================= */
+function toast(msg){
+  const t = document.createElement('div');
+  t.className = 'toast'; t.innerHTML = msg;
+  $('#toasts').appendChild(t);
+  setTimeout(()=>{ t.classList.add('out'); setTimeout(()=>t.remove(), 350); }, 2800);
+}
+
+/* ================= COUNTDOWN (próxima sexta, 20h) ================= */
+const alvo = (() => {
+  const d = new Date(); d.setHours(20,0,0,0);
+  let add = (5 - d.getDay() + 7) % 7;
+  if(add === 0 && Date.now() >= d.getTime()) add = 7;
+  d.setDate(d.getDate() + add);
+  return d;
+})();
+function tick(){
+  let ms = Math.max(0, alvo - Date.now());
+  const p = v => String(v).padStart(2,'0');
+  $('#cd-d').textContent = p(Math.floor(ms/864e5));
+  $('#cd-h').textContent = p(Math.floor(ms/36e5)%24);
+  $('#cd-m').textContent = p(Math.floor(ms/6e4)%60);
+  $('#cd-s').textContent = p(Math.floor(ms/1e3)%60);
+}
+tick(); setInterval(tick, 1000);
+
+/* ================= SCROLL: reveals + contadores ================= */
+function initReveals(){
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(en => { if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  }, {threshold:.15});
+  $$('.rv').forEach(el => io.observe(el));
+
+  const ioC = new IntersectionObserver(entries => {
+    entries.forEach(en => {
+      if(!en.isIntersecting) return;
+      const el = en.target, alvo = parseFloat(el.dataset.target),
+            dec = +(el.dataset.decimals||0), suf = el.dataset.suffix||'', t0 = performance.now();
+      (function passo(t){
+        const k = Math.min(1,(t-t0)/1500), e = 1-Math.pow(1-k,3);
+        el.textContent = (alvo*e).toFixed(dec) + suf;
+        if(k<1) requestAnimationFrame(passo);
+      })(t0);
+      ioC.unobserve(el);
+    });
+  }, {threshold:.5});
+  $$('.count').forEach(el => ioC.observe(el));
+}
+setTimeout(initReveals, 1300);
+
+/* ================= PARALLAX DO HERO ================= */
+const stage = $('#stage');
+if(stage && matchMedia('(pointer:fine)').matches){
+  document.querySelector('.hero').addEventListener('mousemove', e => {
+    const r = stage.getBoundingClientRect();
+    const x = (e.clientX - r.left)/r.width - .5, y = (e.clientY - r.top)/r.height - .5;
+    $$('[data-depth]').forEach(el => {
+      const d = +el.dataset.depth;
+      el.style.transform = `translate(${x*d}px, ${y*d}px)`;
+    });
+  });
+}
+
+/* ================= NAV / PROGRESSO / TOPO ================= */
+const nav = $('#nav'), topo = $('#topo'), prog = $('#progress');
+addEventListener('scroll', () => {
+  const y = scrollY;
+  nav.classList.toggle('scrolled', y > 40);
+  topo.classList.toggle('show', y > 600);
+  const h = document.documentElement.scrollHeight - innerHeight;
+  prog.style.width = (h > 0 ? y/h*100 : 0) + '%';
+}, {passive:true});
+topo.addEventListener('click', () => scrollTo({top:0, behavior:'smooth'}));
+
+/* menu mobile */
+const menuBtn = $('#menuBtn'), mobileMenu = $('#mobileMenu');
+menuBtn.addEventListener('click', () => {
+  menuBtn.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+});
+mobileMenu.addEventListener('click', e => {
+  if(e.target.tagName === 'A'){ menuBtn.classList.remove('open'); mobileMenu.classList.remove('open'); }
+});
+
+/* ================= CLUBE ================= */
+$('#formClube').addEventListener('submit', e => {
+  e.preventDefault();
+  toast(`Bem-vinde ao clube, <strong>${$('#emailClube').value.split('@')[0]}</strong>! 💜 Acesso antecipado liberado.`);
+  e.target.reset();
+});
+
+/* ================= RASTRO DE MOTION BLUR NO CURSOR ================= */
+if(matchMedia('(pointer:fine)').matches){
+  let last = 0;
+  addEventListener('mousemove', e => {
+    const now = performance.now();
+    if(now - last < 45) return;
+    last = now;
+    const t = document.createElement('span');
+    t.className = 'trail';
+    t.style.left = e.clientX + 'px';
+    t.style.top  = e.clientY + 'px';
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 620);
+  });
+}
+
+/* ================= PRELOADER ================= */
+setTimeout(() => $('#preloader').classList.add('done'), 1500);
+</script>
+</body>
+</html>
